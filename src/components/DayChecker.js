@@ -8,7 +8,7 @@ const months = moment.months();
 const today = new Date().getDay();
 const currentYear = new Date().getFullYear();
 
-class App extends Component {
+class DayChecker extends Component {
   
   getDayName(number) {
     return days[number];
@@ -41,4 +41,4 @@ class App extends Component {
 
 }
 
-export default App;
+export default DayChecker;
