@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import C from '../data/Constants'; 
 
 class Header extends Component {
   render() {
-    return <h2>This app will tel you if you should work today</h2>;
+    return <h2>{C.HEADER.TITLE}</h2>;
   }
 }
 
