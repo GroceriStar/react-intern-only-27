@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 class MealPlan extends Component {
-  state = {
-    meal: {
-      name: '',
-      description: '',
-      image: ''
-    },
-    meals: []
-};
+  constructor(props) {
+    super(props);
+    this.state = {
+      meal: {},
+      meals: []
+    };
+
+  }
 
   renderMeals() {
-    return _.map(this.state.meals, meal => 
+    return _.map(this.state.meals, meal =>
       <div>
         <img src={meal.image} alt="Smiley face" height="42" width="42"></img>
         <li>{meal.name}</li>
@@ -21,26 +21,28 @@ class MealPlan extends Component {
     );
   }
 
-  saveImage(event) {
-    this.setState({ meal: { ...this.state.meal, image: event.target.value }});
-  }
-  saveName(event) {
-    this.setState({ meal: { ...this.state.meal, name: event.target.value }});
-  }
-  saveDescription(event) {
-    this.setState({ meal: { ...this.state.meal, description: event.target.value }});
+  saveMeal(event) {
+    event.preventDefault();
+    const launch = {
+      name: event.target.name.value || '', 
+      image: event.target.image.value || '',
+      description: event.target.description.value || '' 
+    }
+    this.setState({ meal: launch });
+    this.setState({ prueba: 'ADIOS' });
+    this.setState({ meals: [...this.state.meals, launch] });
   }
 
   render() {
     return (
       <div>
         <h2>Today you should eat this</h2>
-        <input onChange={e => this.saveName(e)} value={this.state.meal.name} type="text" />
-        <textarea onChange={e => this.saveDescription(e)} value={this.state.meal.description} type="text" />
-        <input onChange={e => this.saveImage(e)} value={this.state.meal.image} type="text" />
-        <button onClick={() =>  this.setState({ meals: [...this.state.meals, this.state.meal] })}>
-          Add meal
-        </button>
+        <form onSubmit={e => this.saveMeal(e)}>
+          <input name="name" type="text" />
+          <textarea name="description" type="text" />
+          <input name="image" type="text" />
+          <button type="submit">Add meal</button>
+        </form>
         <ul>
           {this.renderMeals()}
         </ul>
