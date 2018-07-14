@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import InputMeal from  './InputMeal';
+
 class MealPlan extends Component {
   constructor(props) {
     super(props);
@@ -8,7 +10,9 @@ class MealPlan extends Component {
       meal: {},
       meals: []
     };
-
+    
+    this.saveMeal = this.saveMeal.bind(this);
+    this.renderMeals = this.renderMeals.bind(this);
   }
 
   renderMeals() {
@@ -29,24 +33,15 @@ class MealPlan extends Component {
       description: event.target.description.value || '' 
     }
     this.setState({ meal: launch });
-    this.setState({ prueba: 'ADIOS' });
     this.setState({ meals: [...this.state.meals, launch] });
   }
 
   render() {
     return (
-      <div>
-        <h2>Today you should eat this</h2>
-        <form onSubmit={e => this.saveMeal(e)}>
-          <input name="name" type="text" />
-          <textarea name="description" type="text" />
-          <input name="image" type="text" />
-          <button type="submit">Add meal</button>
-        </form>
-        <ul>
-          {this.renderMeals()}
-        </ul>
-      </div>
+      <InputMeal 
+        onSendMeal={this.saveMeal} 
+        printMeals={this.renderMeals}>
+      </InputMeal>
     );
   }
 }
