@@ -1,28 +1,47 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import InputMeal from  './InputMeal';
+
 class MealPlan extends Component {
-  state = {
-    meal: '',
-    meals: []
-};
+  constructor(props) {
+    super(props);
+    this.state = {
+      meal: {},
+      meals: []
+    };
+    
+    this.saveMeal = this.saveMeal.bind(this);
+    this.renderMeals = this.renderMeals.bind(this);
+  }
 
   renderMeals() {
-    return _.map(this.state.meals, meal => <li>{meal}</li>);
+    return _.map(this.state.meals, meal =>
+      <div>
+        <img src={meal.image} alt="Smiley face" height="42" width="42"></img>
+        <li>{meal.name}</li>
+        <span>{meal.description}</span>
+      </div>
+    );
+  }
+
+  saveMeal(event) {
+    event.preventDefault();
+    const launch = {
+      name: event.target.name.value || '', 
+      image: event.target.image.value || '',
+      description: event.target.description.value || '' 
+    }
+    this.setState({ meal: launch });
+    this.setState({ meals: [...this.state.meals, launch] });
   }
 
   render() {
     return (
-      <div>
-        <h2>Today you should eat this</h2>
-        <input onChange={e => this.setState({meal: e.target.value})} value={this.state.meal} type="text" />
-        <button onClick={() => this.setState({meals: [...this.state.meals, this.state.meal]})}>
-          Add meal
-        </button>
-        <ul>
-          {this.renderMeals()}
-        </ul>
-      </div>
+      <InputMeal 
+        onSendMeal={this.saveMeal} 
+        printMeals={this.renderMeals}>
+      </InputMeal>
     );
   }
 }
