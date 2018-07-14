@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import recipes from '../data/Recipes';
 import InputMeal from './InputMeal';
 
 class MealPlan extends Component {
@@ -18,11 +19,11 @@ class MealPlan extends Component {
 
   renderMeals() {
     return _.map(this.state.meals, meal =>
-      <div>
+      <li>
+        <h5>{meal.name}</h5>
         <img src={meal.image || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png'} alt="Meal Image" height="42" width="42"></img>
-        <li>{meal.name}</li>
-        <span>{meal.description}</span>
-      </div>
+        <p>{meal.description}</p>
+      </li>
     );
   }
 
@@ -38,13 +39,7 @@ class MealPlan extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      meals: [
-        { name: "Eggs with bacon" },
-        { name: "Spaghetti carbonara" },
-        { name: "Oatmeal" }
-      ]
-    });
+    this.setState({ meals: recipes });
   }
 
   componentDidUpdate(prevProps, prevState) {
