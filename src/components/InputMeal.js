@@ -1,6 +1,6 @@
 import React from 'react';
 
-function InputMeal({ onSendMeal, printMeals }) {
+function InputMeal({ onSendMeal, printMeals , showAddMealMessage}) {
 
   return (
     <div>
@@ -10,6 +10,7 @@ function InputMeal({ onSendMeal, printMeals }) {
         <textarea name="description" type="text" />
         <input name="image" type="text" />
         <button type="submit">Add meal</button>
+        {showAddMealMessage ? <p>New meal added</p> : null}
       </form>
       <ul>
         {printMeals()}
